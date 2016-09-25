@@ -1,0 +1,50 @@
+{
+  "name": "webgl-exp",
+  "version": "0.0.1",
+  "description": "webgl expeiments",
+  "main": "index.js",
+  "author": "Safort",
+  "license": "ISC",
+  "scripts": {
+    "start": "node ./app/index",
+    "build-frontend": "NODE_ENV=production webpack",
+    "watch-frontend": "NODE_ENV=development webpack-dev-server",
+    "build-backend": "NODE_ENV=production gulp build",
+    "watch-backend": "NODE_ENV=development gulp watch",
+    "lint": "eslint ./src"
+  },
+  "devDependencies": {
+    "babel-core": "^6.11.4",
+    "babel-eslint": "^6.1.2",
+    "babel-loader": "^6.2.4",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-preset-stage-3": "^6.11.0",
+    "css-loader": "^0.23.1",
+    "eslint": "^3.1.1",
+    "eslint-config-airbnb": "^9.0.1",
+    "eslint-plugin-import": "^1.11.1",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^6.1.2",
+    "gulp-file-cache": "0.0.1",
+    "gulp-nodemon": "^2.1.0",
+    "gulp-plumber": "^1.1.0",
+    "gulp-util": "^3.0.7",
+    "html-webpack-plugin": "^2.22.0",
+    "postcss-loader": "^0.9.1",
+    "precss": "^1.4.0",
+    "style-loader": "^0.13.1",
+    "webpack": "^1.13.1",
+    "webpack-dev-server": "^1.14.1"
+  },
+  "dependencies": {
+    "body-parser": "^1.14.1",
+    "compression": "^1.6.1",
+    "cookie-parser": "^1.4.1",
+    "express": "^4.13.3",
+    "history": "^3.0.0",
+    "method-override": "^2.3.5",
+    "node-static": "^0.7.7",
+    "postcss-loader": "^0.9.1",
+    "three": "^0.81.2"
+  }
+}
