@@ -10,5 +10,8 @@
     "no-underscore-dangle": 0,
     "no-shadow": 0,
     "react/prop-types": 0
+  },
+  "globals": {
+    "THREE": true
   }
 }
