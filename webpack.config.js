@@ -22,7 +22,7 @@ if (isDev) {
 const output = {
   path: path.resolve(__dirname, 'app/public'),
   publicPath: '/',
-  filename: 'bundle.js'
+  filename: 'bundle.js',
 };
 
 const plugins = [
@@ -30,7 +30,7 @@ const plugins = [
   new HtmlWebpackPlugin({
     title: 'Title',
     filename: 'index.html',
-    template: 'templates/index.html'
+    template: 'templates/index.html',
   }),
   new webpack.DefinePlugin({
     'process.env.NODE_ENV': JSON.stringify(NODE_ENV)
@@ -44,7 +44,7 @@ if (isDev) {
 } else {
   plugins.push(
     new webpack.optimize.UglifyJsPlugin({
-      sourceMap: true
+      sourceMap: true,
     })
   );
 }
@@ -62,12 +62,16 @@ module.exports = {
       {
         test: /\.jsx?$/,
         loaders: ['babel-loader'],
-        include: path.join(__dirname, 'src')
+        include: path.join(__dirname, 'src'),
       },
       {
         test:   /\.css$/,
-        loader: "style-loader!css-loader!postcss-loader"
-      }
+        loader: 'style-loader!css-loader!postcss-loader',
+      },
+      {
+        test: /\.jpe?g$|\.gif$|\.png$|\.svg$|\.woff$|\.ttf$|\.wav$|\.mp3$/,
+        loader: 'file'
+      },
     ],
   },
 
@@ -81,6 +85,6 @@ module.exports = {
     contentBase: './app/public',
     historyApiFallback: true,
     hot: true,
-    headers: { 'Access-Control-Allow-Origin': '*' }
+    headers: { 'Access-Control-Allow-Origin': '*' },
   }
 }
