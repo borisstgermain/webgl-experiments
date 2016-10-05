@@ -44,11 +44,9 @@ scene.add(ground);
 
 /* create box */
 
+const crateImage = require('../images/crate.jpg');
 const BoxMaterial = new THREE.MeshPhongMaterial({
-  color: 0xff0000,
-  shininess: 150,
-  specular: 0x222222,
-  shading: THREE.SmoothShading,
+  map: THREE.ImageUtils.loadTexture(crateImage),
 });
 const BoxGeometry = new THREE.BoxGeometry(3, 3, 3);
 
