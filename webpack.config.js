@@ -69,7 +69,7 @@ module.exports = {
         loader: 'style-loader!css-loader!postcss-loader',
       },
       {
-        test: /\.jpe?g$|\.gif$|\.png$|\.svg$|\.woff$|\.ttf$|\.wav$|\.mp3$/,
+        test: /\.jpe?g$|\.gif$|\.png$|\.svg$|\.woff$|\.ttf$|\.wav$|\.mp3$|\.obj$|\.tga$/,
         loader: 'file'
       },
     ],
