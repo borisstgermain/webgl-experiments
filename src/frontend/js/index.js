@@ -2,6 +2,10 @@ global.THREE = require('three');
 require('./vendors/OrbitControls');
 require('./vendors/OBJLoader');
 
+const eyesImage = require('../model/Flash/Flash_Eyes_Mouth_N.tga');
+const bodyImage = require('../images/red.png');
+const propImage = require('../images/yellow.png');
+const bumpMapBodyImage = require('../model/Flash/Flash_S.tga');
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, 700 / 400, 0.1, 1000);
@@ -59,63 +63,61 @@ scene.add(cube);
 
 const flash = require('../model/Flash/Flash.obj');
 const loader = new THREE.OBJLoader();
-loader.load(flash, function(object) {
-    scene.add(object);
 
-    object.scale.x = 2;
-    object.scale.y = 2;
-    object.scale.z = 2;
+/* eslint no-param-reassign: 0 */
+loader.load(flash, object => {
+  const loaderImage = new THREE.ImageLoader();
 
-    const meshes = [];
-    object.traverse(function(child) {
-        if (child instanceof THREE.Mesh) {
-            meshes.push(child);
-        }
-    });
+  scene.add(object);
 
-    const loaderImage = new THREE.ImageLoader();
-    let eyesImage = require('../model/Flash/Flash_Eyes_Mouth_N.tga');
-    let bodyImage = require('../model/Flash/Flash_D.tga');
-    let propImage = require('../model/Flash/Flash_Props_S.tga');
+  object.scale.x = 2;
+  object.scale.y = 2;
+  object.scale.z = 2;
 
-    const eyesTexture = new THREE.Texture();
-    loaderImage.load(eyesImage, function(image) {
-        eyesTexture.image = image,
-        eyesTexture.needsUpdate = true
-    });
+  const meshes = [];
+  object.traverse(child => {
+    if (child instanceof THREE.Mesh) {
+      meshes.push(child);
+    }
+  });
 
-    const bodyTexture = new THREE.Texture();
-    loaderImage.load(bodyImage, function(image) {
-        bodyTexture.image = image,
-        bodyTexture.needsUpdate = true
-    });
+  const eyesTexture = new THREE.Texture();
+  loaderImage.load(eyesImage, image => {
+    eyesTexture.image = image;
+    eyesTexture.needsUpdate = true;
+  });
 
-    const propTexture = new THREE.Texture();
-    loaderImage.load(propImage, function(image) {
-        propTexture.image = image,
-        propTexture.needsUpdate = true
-    });
+  const bodyTexture = new THREE.Texture();
+  loaderImage.load(bodyImage, image => {
+    bodyTexture.image = image;
+    bodyTexture.needsUpdate = true;
+  });
 
-    let bumpMapBodyImage = require('../model/Flash/Flash_S.tga');
-    let bumpMapBody = new THREE.TextureLoader().load(bumpMapBodyImage);
+  const propTexture = new THREE.Texture();
+  loaderImage.load(propImage, image => {
+    propTexture.image = image;
+    propTexture.needsUpdate = true;
+  });
 
-    let prop = meshes[0];
-    let body = meshes[1];
-    let eyes = meshes[2];
-    eyes.material = new THREE.MeshPhongMaterial({
-        map: eyesTexture,
-        specular: 0xffffff
-    });
-    body.material = new THREE.MeshPhongMaterial({
-        map: bodyTexture,
-        bumpMap: bumpMapBody
-    });
-    prop.material = new THREE.MeshPhongMaterial({
-        map: propTexture,
-    });
+  const bumpMapBody = new THREE.TextureLoader().load(bumpMapBodyImage);
 
-    console.log(object);
-})
+  const prop = meshes[0];
+  const body = meshes[1];
+  const eyes = meshes[2];
+  eyes.material = new THREE.MeshPhongMaterial({
+    map: eyesTexture,
+    specular: 0xffffff,
+  });
+  body.material = new THREE.MeshPhongMaterial({
+    map: bodyTexture,
+    bumpMap: bumpMapBody,
+  });
+  prop.material = new THREE.MeshPhongMaterial({
+    map: propTexture,
+  });
+
+  console.log(object);
+});
 
 function render() {
   requestAnimationFrame(render);
