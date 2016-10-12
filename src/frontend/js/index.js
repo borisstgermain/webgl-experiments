@@ -2,10 +2,6 @@ global.THREE = require('three');
 require('./vendors/OrbitControls');
 require('./vendors/OBJLoader');
 
-const eyesImage = require('../model/Flash/Flash_Eyes_Mouth_N.tga');
-const bodyImage = require('../images/red.png');
-const propImage = require('../images/yellow.png');
-const bumpMapBodyImage = require('../model/Flash/Flash_S.tga');
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, 700 / 400, 0.1, 1000);
@@ -61,18 +57,19 @@ cube.castShadow = true;
 cube.receiveShadow = true;
 scene.add(cube);
 
-const flash = require('../model/Flash/Flash.obj');
-const loader = new THREE.OBJLoader();
+
+// 3d object
+const objLoader = new THREE.OBJLoader();
+const imageLoader = new THREE.ImageLoader();
+const bb8 = require('../model/BB8/bb8.obj');
 
 /* eslint no-param-reassign: 0 */
-loader.load(flash, object => {
-  const loaderImage = new THREE.ImageLoader();
-
+objLoader.load(bb8, object => {
   scene.add(object);
 
-  object.scale.x = 2;
-  object.scale.y = 2;
-  object.scale.z = 2;
+  object.scale.x = 0.05;
+  object.scale.y = 0.05;
+  object.scale.z = 0.05;
 
   const meshes = [];
   object.traverse(child => {
@@ -81,43 +78,45 @@ loader.load(flash, object => {
     }
   });
 
-  const eyesTexture = new THREE.Texture();
-  loaderImage.load(eyesImage, image => {
-    eyesTexture.image = image;
-    eyesTexture.needsUpdate = true;
+  const head = meshes[0];
+  const body = meshes[1];
+
+  // Textures
+  const headTexture = new THREE.Texture();
+  const headImage = require('../model/BB8/HEAD diff MAP.jpg');
+  imageLoader.load(headImage, image => {
+    headTexture.image = image;
+    headTexture.needsUpdate = true;
   });
 
   const bodyTexture = new THREE.Texture();
-  loaderImage.load(bodyImage, image => {
+  const bodyImage = require('../model/BB8/Body diff MAP.jpg');
+  imageLoader.load(bodyImage, image => {
     bodyTexture.image = image;
     bodyTexture.needsUpdate = true;
   });
 
-  const propTexture = new THREE.Texture();
-  loaderImage.load(propImage, image => {
-    propTexture.image = image;
-    propTexture.needsUpdate = true;
-  });
-
+  // для объема
+  const bumpMapBodyImage = require('../model/BB8/BODY bump MAP.jpg');
+  const bumpMapHeadImage = require('../model/BB8/HEAD bump MAP.jpg');
   const bumpMapBody = new THREE.TextureLoader().load(bumpMapBodyImage);
+  const bumpMapHead = new THREE.TextureLoader().load(bumpMapHeadImage);
 
-  const prop = meshes[0];
-  const body = meshes[1];
-  const eyes = meshes[2];
-  eyes.material = new THREE.MeshPhongMaterial({
-    map: eyesTexture,
+  head.material = new THREE.MeshPhongMaterial({
+    map: headTexture,
     specular: 0xffffff,
+    bump: bumpMapHead,
+    bumpScale: 1
   });
+
   body.material = new THREE.MeshPhongMaterial({
     map: bodyTexture,
+    specular: 0xffffff,
     bumpMap: bumpMapBody,
+    bumpScale: 1
   });
-  prop.material = new THREE.MeshPhongMaterial({
-    map: propTexture,
-  });
-
-  console.log(object);
 });
+
 
 function render() {
   requestAnimationFrame(render);
