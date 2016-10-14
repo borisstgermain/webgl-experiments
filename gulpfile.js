@@ -10,7 +10,7 @@ const Cache = require('gulp-file-cache');
 const cache = new Cache();
 
 
-gulp.task('build', ['backend-prod']);
+gulp.task('build', ['backend-prod', 'static-files']);
 
 
 gulp.task('watch', ['backend-dev'], () => {
@@ -35,6 +35,15 @@ gulp.task('watch', ['backend-dev'], () => {
   return nodemon;
 });
 
+
+gulp.task('static-files', () => {
+  gulp
+    .src('./src/frontend/images/**')
+    .pipe(gulp.dest('app/public/images'));
+  gulp
+    .src('./src/frontend/models/**')
+    .pipe(gulp.dest('app/public/models'));
+});
 
 gulp.task('backend-prod', () => {
   return gulp
