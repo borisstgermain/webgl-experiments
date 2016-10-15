@@ -45,9 +45,8 @@ scene.add(ground);
 
 /* create box */
 
-const crateImage = require('../images/crate.jpg');
 const BoxMaterial = new THREE.MeshPhongMaterial({
-  map: THREE.ImageUtils.loadTexture(crateImage),
+  map: THREE.ImageUtils.loadTexture('./images/crate.jpg'),
 });
 const BoxGeometry = new THREE.BoxGeometry(3, 3, 3);
 
@@ -61,10 +60,9 @@ scene.add(cube);
 // 3d object
 const objLoader = new THREE.OBJLoader();
 const imageLoader = new THREE.ImageLoader();
-const bb8 = require('../model/BB8/bb8.obj');
 
 /* eslint no-param-reassign: 0 */
-objLoader.load(bb8, object => {
+objLoader.load('./models/BB8/bb8.obj', object => {
   scene.add(object);
 
   object.scale.x = 0.05;
@@ -83,37 +81,35 @@ objLoader.load(bb8, object => {
 
   // Textures
   const headTexture = new THREE.Texture();
-  const headImage = require('../model/BB8/HEAD diff MAP.jpg');
-  imageLoader.load(headImage, image => {
+  imageLoader.load('./models/BB8/HEAD_diff_MAP.jpg', image => {
     headTexture.image = image;
     headTexture.needsUpdate = true;
   });
 
   const bodyTexture = new THREE.Texture();
-  const bodyImage = require('../model/BB8/Body diff MAP.jpg');
-  imageLoader.load(bodyImage, image => {
+  imageLoader.load('./models/BB8/Body_diff_MAP.jpg', image => {
     bodyTexture.image = image;
     bodyTexture.needsUpdate = true;
   });
 
   // для объема
-  const bumpMapBodyImage = require('../model/BB8/BODY bump MAP.jpg');
-  const bumpMapHeadImage = require('../model/BB8/HEAD bump MAP.jpg');
-  const bumpMapBody = new THREE.TextureLoader().load(bumpMapBodyImage);
-  const bumpMapHead = new THREE.TextureLoader().load(bumpMapHeadImage);
+  const bumpMapBody = new THREE.TextureLoader()
+    .load('./models/BB8/BODYbumpMAP.jpg');
+  const bumpMapHead = new THREE.TextureLoader()
+    .load('./models/BB8/HEAD_bump_MAP.jpg');
 
   head.material = new THREE.MeshPhongMaterial({
     map: headTexture,
     specular: 0xffffff,
     bump: bumpMapHead,
-    bumpScale: 1
+    bumpScale: 1,
   });
 
   body.material = new THREE.MeshPhongMaterial({
     map: bodyTexture,
     specular: 0xffffff,
     bumpMap: bumpMapBody,
-    bumpScale: 1
+    bumpScale: 1,
   });
 });
 

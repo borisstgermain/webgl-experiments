@@ -7,6 +7,7 @@
   "license": "ISC",
   "scripts": {
     "start": "node ./app/index",
+    "build": "npm run build-backend && npm run build-frontend",
     "build-frontend": "NODE_ENV=production webpack",
     "watch-frontend": "NODE_ENV=development webpack-dev-server",
     "build-backend": "NODE_ENV=production gulp build",
